@@ -4,7 +4,7 @@ const router = express.Router();
 const puppeteer = require('puppeteer');
 
 
-router.get('/gpdf', async (req, res) => {
+router.post('/gpdf', async (req, res) => {
     const {nombre, url } = req.body
      
         //pool.query('INSERT INTO documentos set ?', [nuevo_doc]);
