@@ -1,25 +1,24 @@
-//let shell = require("shelljs");
-const cron = require("node-cron");
+
 const express = require("express");
 const path = require('path');
 const morgan = require('morgan');
-const Request = require("request");
-const admin = require("firebase-admin");
-
- 
-
-
-//conectar y configurar la conexion a firebase
-var serviceAccount = require("./conexiondemo-f29c7-firebase.json");
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://conexiondemo-f29c7.firebaseio.com"
-});
-const database = admin.database();
+const exphbs = require('express-handlebars'); //motor de plantillas
 
 
 const app = express();
 app.set('port', process.env.PORT || 4000);
+//configurar rutas de las vistas
+app.set('views',path.join(__dirname, 'views'));
+//-- configurar motor de plantilla
+app.engine('.hbs', exphbs({
+  defaultLayout: 'main',
+  layoutsDir: path.join(app.get('views'), 'layouts'),
+  partialsDir: path.join(app.get('views'), 'partials'),
+  extname: '.hbs',
+  helpers: ''
+}));
+app.set('view engine', '.hbs');
+
 
 //-- middlewares de la cabecera
 app.use((req, res, next) => {
@@ -42,35 +41,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
-// To backup a database
-cron.schedule('* * * * *', () => {
-  console.log('running a task every minute');
-  Request.get({
-    "headers": { "content-type": "application/json" },
-    "url": "https://api.myjson.com/bins//mpetd",
-    "body": JSON.stringify({
-     
-    })
-  }, (error, response, body) => {
-    if (error) {
-      return console.dir(error);
-    }
-    console.log(JSON.parse(body));
-    var respuesta = JSON.parse(body)
-
-    var ref = database.ref("usuarios");
-   
-    ref.child(respuesta.Numero).set(respuesta);
-  });
-});
-
-
 // Rutas de la aplicación(app)
 app.use(require('./routes/'));//importar las rutas principales de index.js
 //app.use(require('./routes/admin'));//importar las rutas de admin.js
 
 //----Configurar directorio Public para la app
-app.use(express.static(path.join(__dirname, 'src/public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //---- Iniciar el servidor
 app.listen(app.get('port'), () => {

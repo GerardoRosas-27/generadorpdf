@@ -1,0 +1,73 @@
+
+<nav id="menuPrincipal" class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+  <form class="form-inline my-1">
+
+    <li class="nav-item dropdown my-auto">
+
+      <label class="form-control mr-sm-0" for="buscar"><img src="/img/logo-movil.png" alt=""></label>
+      {{#if user}}
+      <input name="buscar" id="textDocumentos" class="form-control mr-sm-1" type="text" placeholder="Buscar"
+        aria-label="Search">
+
+      <div id="reslutDocumentos" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <button type="button" class="btn close pr-3" id="busCerrar" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+       
+        
+        <div id="reslutDoc">
+          <!--resultados busqueda-->
+        </div>
+      </div>
+      {{/if}}
+    </li>
+  </form>
+
+
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <ul id="navMenuP" class="navbar-nav mx-lg-auto">
+      <li class="nav-item">
+        <a class="nav-link active" href="/">INICIO</a>
+      </li>
+        {{#if user}}
+      <li class="nav-item">
+        <a class="nav-link active" href="/docentes">DOCENTES</a>
+      </li>
+       {{/if}}
+      <li class="nav-item">
+        <a class="nav-link active" href="https://www.bibliotechnia.com.mx/" target="_blank">BIBLIOTECA DIGITAL</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="http://www.construye-t.org.mx/" target="_blank">CONSTRUYE_T</a>
+      </li> 
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+          aria-expanded="false"><i class="icofont-ui-user"></i> {{user.nombre}}</a>
+        <div class="dropdown-menu">
+          {{#if user}}
+          {{else}}
+          <a class="dropdown-item" href="/signin">Iniciar sesión</a>
+
+          {{/if}}
+          {{#if user}}
+
+          <a class="dropdown-item" href="/perfil">Perfil</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/cerrarsesion">Cerrar sesión</a>
+          {{/if}}
+        </div>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>

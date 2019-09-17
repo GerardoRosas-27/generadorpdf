@@ -1,7 +1,7 @@
 
 
 function cargarPDF() {
-    var nombre = 'ejemploPDF';
+    var nombre = 'ejemplo2';
     var urlpdf = 'https://developers.google.com/chart/';
 	var data = new URLSearchParams("nombre=" + nombre  + "&url=" + urlpdf);
 	var url = './gpdf/';
@@ -16,7 +16,7 @@ async function ajaxgGenerarPDF(data, url) {
 		});
 		
 		var respuesta = JSON.parse(await response.text());
-		console.log(respuesta.url);
+		console.log(respuesta);
 	
 		
 	} catch (err) {

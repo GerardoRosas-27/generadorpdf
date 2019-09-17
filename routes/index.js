@@ -3,6 +3,9 @@ const express = require('express');
 const router = express.Router();
 const puppeteer = require('puppeteer');
 
+router.get('/', (req, res) => {
+    res.render('inicio/inicio');
+});
 
 router.post('/gpdf', async (req, res) => {
     const {nombre, url } = req.body;
@@ -14,15 +17,15 @@ router.post('/gpdf', async (req, res) => {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();  
           
-          await page.goto(url , { waitUntil: 'networkidle0' });
+            await page.goto(url , { waitUntil: 'networkidle0' });
             await page.emulateMedia('screen');
-            await page.pdf({
+           var pagina = await page.pdf({
                 path: './documentos/' + nombre + '.pdf',
                 format: 'A4',
                 printBackground: true
             });
             
-            console.log('documento creado');
+            console.log('documento creado: '+ pagina);
             await browser.close();
          
            console.log('el documento se genero')
